@@ -31,5 +31,39 @@ export class InventoryPage {
       message ?? 'Expected the inventory page title to be Products.',
     ).toHaveText('Products');
   }
+
+  async addItemToCart(itemName: string): Promise<void> {
+    await this.itemActionButton(itemName).click();
+  }
+
+  async removeItemFromCart(itemName: string): Promise<void> {
+    await this.itemActionButton(itemName).click();
+  }
+
+  async expectCartCount(count: number): Promise<void> {
+    if (count === 0) {
+      await expect(
+        this.shoppingCartBadge,
+        'Expected the cart badge to be hidden when the cart is empty.',
+      ).toBeHidden();
+
+      return;
+    }
+
+    await expect(
+      this.shoppingCartBadge,
+      `Expected the cart badge to show ${count} item(s).`,
+    ).toHaveText(String(count));
+  }
+
+  async expectItemActionLabel(itemName: string, label: string): Promise<void> {
+    await expect(
+      this.itemActionButton(itemName),
+      `Expected ${itemName} to show the ${label} action.`,
+    ).toHaveText(label);
+  }
+
+  async openCart(): Promise<void> {
+    await this.shoppingCartLink.click();
   }
 }
