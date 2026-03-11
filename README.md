@@ -4,11 +4,10 @@ Playwright end-to-end test automation for Sauce Demo using TypeScript, page obje
 
 ## Covered scenarios
 
-- Sign in with a standard user
+- Sign in: with a standard user
 - Error handling for locked and invalid users
-- Add an item to the cart from the inventory page
-- Remove an item from the inventory page
-- Complete checkout with multiple items
+- e2e flow for complete checkout with multiple items 
+- Add and Remove an item from the inventory page
 
 ## Tech stack
 
@@ -29,41 +28,55 @@ Playwright end-to-end test automation for Sauce Demo using TypeScript, page obje
 1. Clone the repository.
 2. Install project dependencies:
 
-   npm install
+```bash
+npm install
+```
 
-3. Install Playwright browsers:
-
-   npx playwright install
 
 ## How to run the tests
 
-Run the full test suite:
+### Run the full test suite
 
+```bash
 npm test
+```
 
-Run tests in headed mode:
+### Run tests in headed mode
 
+```bash
 npm run test:headed
+```
 
-Open the Playwright UI runner:
+### Open the Playwright UI runner
 
+```bash
 npm run test:ui
+```
 
-Open the last generated HTML report:
+### Open the last generated HTML report
 
+```bash
 npm run report
+```
+
+## TODO
+
+### Scenarios to cover
+
+- filtering
+- remove functionality on cart page
+- cancel on checkout page
+- check social links
+- checkout without items
+
+### Tech notes
+
+- add copilot-instructions
+- ci/cd 
+- add linters/formatters
+- add business functions abstraction (only on scaling) 
+
 
 ## Notes
 
 - The test base URL is set to `https://www.saucedemo.com` in the Playwright config.
-
-Setup instructions.
-
-
-
-
-
-
-
-
-
