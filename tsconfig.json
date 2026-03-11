@@ -9,6 +9,7 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@expects/*": ["expects/*"],
       "@pages/*": ["pages/*"],
       "@fixtures/*": ["fixtures/*"],
       "@tests/*": ["tests/*"]
@@ -17,6 +18,7 @@
   },
   "include": [
     "playwright.config.ts",
+    "expects/**/*.ts",
     "pages/**/*.ts",
     "fixtures/**/*.ts",
     "tests/**/*.ts"

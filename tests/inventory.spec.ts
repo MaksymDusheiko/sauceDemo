@@ -2,8 +2,9 @@ import { test } from '@fixtures/test.fixture';
 
 test.describe('Sauce Demo inventory', () => {
   test('allows a standard user to add an item to the cart from inventory', async ({
-    cartPage,
+    cartExpect,
     getUser,
+    inventoryExpect,
     inventoryPage,
     loginPage,
   }) => {
@@ -11,22 +12,23 @@ test.describe('Sauce Demo inventory', () => {
     const itemName = 'Sauce Labs Backpack';
 
     await loginPage.signIn(standardUser.username, standardUser.password);
-    await inventoryPage.expectLoaded();
-    await inventoryPage.expectItemActionLabel(itemName, 'Add to cart');
+    await inventoryExpect.pageToBeLoaded();
+    await inventoryExpect.itemActionToBe(itemName, 'Add to cart');
 
     await inventoryPage.addItemToCart(itemName);
 
-    await inventoryPage.expectItemActionLabel(itemName, 'Remove');
-    await inventoryPage.expectCartCount(1);
+    await inventoryExpect.itemActionToBe(itemName, 'Remove');
+    await inventoryExpect.cartCountToBe(1);
 
     await inventoryPage.openCart();
-    await cartPage.expectLoaded();
-    await cartPage.expectItems([itemName]);
+    await cartExpect.pageToBeLoaded();
+    await cartExpect.toContainItems([itemName]);
   });
 
   test('allows a standard user to remove an item from the inventory page', async ({
-    cartPage,
+    cartExpect,
     getUser,
+    inventoryExpect,
     inventoryPage,
     loginPage,
   }) => {
@@ -34,18 +36,18 @@ test.describe('Sauce Demo inventory', () => {
     const itemName = 'Sauce Labs Backpack';
 
     await loginPage.signIn(standardUser.username, standardUser.password);
-    await inventoryPage.expectLoaded();
+    await inventoryExpect.pageToBeLoaded();
 
     await inventoryPage.addItemToCart(itemName);
-    await inventoryPage.expectCartCount(1);
+    await inventoryExpect.cartCountToBe(1);
 
     await inventoryPage.removeItemFromCart(itemName);
 
-    await inventoryPage.expectItemActionLabel(itemName, 'Add to cart');
-    await inventoryPage.expectCartCount(0);
+    await inventoryExpect.itemActionToBe(itemName, 'Add to cart');
+    await inventoryExpect.cartCountToBe(0);
 
     await inventoryPage.openCart();
-    await cartPage.expectLoaded();
-    await cartPage.expectEmpty();
+    await cartExpect.pageToBeLoaded();
+    await cartExpect.toBeEmpty();
   });
 });

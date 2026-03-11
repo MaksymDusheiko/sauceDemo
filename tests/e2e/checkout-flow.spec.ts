@@ -2,11 +2,14 @@ import { test } from '@fixtures/test.fixture';
 
 test.describe('Sauce Demo checkout', () => {
   test('allows a standard user to complete checkout with a few items', async ({
+    cartExpect,
     cartPage,
+    checkoutExpect,
     checkoutCompletePage,
     checkoutInformationPage,
     checkoutOverviewPage,
     getUser,
+    inventoryExpect,
     inventoryPage,
     loginPage,
   }) => {
@@ -14,31 +17,31 @@ test.describe('Sauce Demo checkout', () => {
     const itemNames = ['Sauce Labs Backpack', 'Sauce Labs Bike Light', 'Sauce Labs Bolt T-Shirt'];
 
     await loginPage.signIn(standardUser.username, standardUser.password);
-    await inventoryPage.expectLoaded();
+    await inventoryExpect.pageToBeLoaded();
 
     for (const itemName of itemNames) {
       await inventoryPage.addItemToCart(itemName);
     }
 
     await inventoryPage.openCart();
-    await cartPage.expectLoaded();
-    await cartPage.expectItems(itemNames);
+    await cartExpect.pageToBeLoaded();
+    await cartExpect.toContainItems(itemNames);
 
     await cartPage.startCheckout();
-    await checkoutInformationPage.expectLoaded();
+    await checkoutExpect.informationPageToBeLoaded();
     await checkoutInformationPage.continueCheckout({
       firstName: 'Test',
       lastName: 'User',
       postalCode: '12345',
     });
 
-    await checkoutOverviewPage.expectLoaded();
-    await checkoutOverviewPage.expectItems(itemNames);
+    await checkoutExpect.overviewPageToBeLoaded();
+    await checkoutExpect.overviewToContainItems(itemNames);
 
     await checkoutOverviewPage.finishCheckout();
-    await checkoutCompletePage.expectLoaded();
+    await checkoutExpect.completePageToBeLoaded();
 
     await checkoutCompletePage.goBackHome();
-    await inventoryPage.expectLoaded('Expected Back Home to return the user to the inventory page.');
+    await inventoryExpect.pageToBeLoaded('Expected Back Home to return the user to the inventory page.');
   });
 });

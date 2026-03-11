@@ -1,8 +1,8 @@
 import { expect, mergeTests } from '@playwright/test';
 
-import { pageFixtures } from '@fixtures/page.fixture';
+import { expectFixtures } from './expect.fixture';
 import { testDataFixtures } from '@fixtures/test-data.fixture';
 
-export const test = mergeTests(pageFixtures, testDataFixtures);
+export const test = mergeTests(expectFixtures, testDataFixtures);
 
 export { expect };
